@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Clash Royale — Rewards</title>
+
+  <!-- QR lib (optional) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
+
+  <style>
+    :root{
+      --card-bg: rgba(255,255,255,0.96);
+      --text: #111;
+      --muted: #666;
+      --accent: #0b69ff;
+    }
+
+    html,body{
+      height:100%;
+      margin:0;
+    }
+
+    body{
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      color: var(--text);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:32px;
+
+      /* Background image (fills entire viewport) */
+      background-image: url("https://i.imgur.com/m72NFZ7.png");
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+    }
+
+    /* Subtle dark overlay for readability */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.22);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Positioned artwork around the modal (outside it) */
+    .art {
+      position: absolute;
+      z-index: 0;
+      pointer-events: none; /* ensure images don't block clicks */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .art img {
+      display: block;
+      width: auto;
+      height: auto;
+      max-width: 24vw;    /* responsive sizing */
+      max-height: 30vh;
+      object-fit: contain; /* do not crop */
+      border-radius: 6px;
+      box-shadow: 0 8px 22px rgba(0,0,0,0.25);
+      background: rgba(255,255,255,0.95);
+      border: 1px solid rgba(0,0,0,0.06);
+    }
+
+    /* Place images in four corners around the modal */
+    .art.top-left    { left: 20px;  top: 20px;    transform: translate(0,0); }
+    .art.top-right   { right: 20px; top: 20px;    transform: translate(0,0); }
+    .art.bottom-left { left: 20px;  bottom: 20px; transform: translate(0,0); }
+    .art.bottom-right{ right: 20px; bottom: 20px; transform: translate(0,0); }
+
+    /* Larger, centered modal (main card) */
+    .card{
+      position: relative;
+      z-index: 1;
+      width: min(980px, calc(100% - 64px)); /* larger modal */
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 36px;
+      box-shadow: 0 18px 48px rgba(0,0,0,0.30);
+      text-align: center;
+      max-width: 1100px;
+    }
+
+    h1{
+      font-size:1.15rem;
+      margin:0 0 8px;
+      font-weight:700;
+    }
+
+    p{margin:0 0 14px;color:var(--muted);font-size:0.98rem}
+
+    /* QR block, centered */
+    #qrcode {
+      margin: 20px auto 8px;
+      width: 240px;
+      height: 240px;
+    }
+
+    .link{
+      display:inline-block;
+      margin-top:10px;
+      color:var(--accent);
+      text-decoration:none;
+      font-weight:600;
+      font-size:0.98rem;
+    }
+
+    .note{font-size:0.85rem;color:var(--muted);margin-top:14px}
+
+    /* Responsive: reduce artwork size and hide on very small screens */
+    @media (max-width:900px){
+      .art img { max-width: 28vw; max-height: 22vh; }
+      .card { padding: 26px; width: calc(100% - 48px); }
+      #qrcode { width: 200px; height: 200px; }
+    }
+
+    @media (max-width:520px){
+      /* On narrow screens, hide outside artwork to avoid overlap */
+      .art { display: none; }
+      .card { padding: 20px; width: calc(100% - 32px); }
+      #qrcode { width: 180px; height: 180px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay" aria-hidden="true"></div>
+
+  <!-- artwork outside the modal (around it) -->
+  <div class="art top-left" aria-hidden="true">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-om4wUHtYlXxIPNXdYm29mAYEts592rku-Q&s"
+         alt="Hero Mini P.E.K.K.A. - Liquipedia Clash Royale Wiki">
+  </div>
+
+  <div class="art top-right" aria-hidden="true">
+    <img src="https://static.wikia.nocookie.net/clashroyale/images/6/60/Heroic_Giant_Card_Render.png/revision/latest/scale-to-width-down/250?cb=20251129210800"
+         alt="Giant/Hero | Clash Royale Wiki | Fandom">
+  </div>
+
+  <div class="art bottom-left" aria-hidden="true">
+    <img src="https://static.wikia.nocookie.net/clashroyale/images/6/6d/Elixir_Collector_2.png/revision/latest/scale-to-width-down/250?cb=20221017033314"
+         alt="Elixir Collector | Clash Royale Wiki | Fandom">
+  </div>
+
+  <div class="art bottom-right" aria-hidden="true">
+    <img src="https://cdn.statsroyale.com/v7/cards/small_b/26000009.png"
+         alt="Elixir Golem | Clash Royale Card Statistics & Info | Stats Royale">
+  </div>
+
+  <main class="card" role="main" aria-labelledby="title">
+    <h1 id="title">Clash Royale — Free rewards</h1>
+    <p>Scan the QR code or open the link below to claim.</p>
+
+    <div id="qrcode" aria-hidden="true"></div>
+
+    <a id="claimLink" class="link" href="#" target="_blank" rel="noopener">Open claim link</a>
+
+    <p class="note">*Promotional. Rewards subject to availability.</p>
+  </main>
+
+  <script>
+    // Change this to your target URL
+    const targetUrl = "http://nsapple.github.io/1";
+
+    window.addEventListener('load', () => {
+      const qEl = document.getElementById('qrcode');
+      qEl.innerHTML = '';
+      if (window.QRCode) {
+        new QRCode(qEl, {
+          text: targetUrl,
+          width: 240,
+          height: 240,
+          colorDark: "#000000",
+          colorLight: "#ffffff",
+          correctLevel: QRCode.CorrectLevel.H
+        });
+      } else {
+        qEl.textContent = targetUrl;
+        qEl.style.fontSize = '0.95rem';
+        qEl.style.color = '#444';
+      }
+      document.getElementById('claimLink').href = targetUrl;
+    });
+  </script>
+</body>
+</html>
